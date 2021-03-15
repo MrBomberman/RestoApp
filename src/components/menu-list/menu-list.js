@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import MenuListItem from '../menu-list-item';
 import {connect} from 'react-redux';
 import WithRestoService from '../hoc'
-import {menuLoaded, menuRequested} from '../../actions'
+import {menuLoaded, menuRequested, menuError} from '../../actions'
+import Error from '../error';
 import Spinner from '../spinner'
 import './menu-list.scss';
 
@@ -14,14 +15,19 @@ class MenuList extends Component {
         const {RestoService} = this.props
         RestoService.getMenuItems() // получим ответ от сервера - массив объектов(данные)
         .then(res => this.props.menuLoaded(res)) // этот же результат мы должны отправить в наш стор, чтобы он записался во внутрь reducer(наш стейт)
+        .catch(error => this.props.menuError(error))
     }
 
     render() {
-        const {menuItems, loading} = this.props // достаем массив из пропсов, которые получили из mapStateToProps
+        const {menuItems, loading, error} = this.props // достаем массив из пропсов, которые получили из mapStateToProps
         // получаем новые данные уже из редакс стора
 
         if (loading) {
             return <Spinner/>
+        }
+
+        if (error) {
+            return <Error/>
         }
 
         return (
@@ -39,7 +45,8 @@ class MenuList extends Component {
 const mapStateToProps = (state) => { // будем получать стейт из reducer
     return {
         menuItems: state.menu, // получаем массив данных
-        loading: state.loading
+        loading: state.loading,
+        error: state.error
     }
 }
 
@@ -53,7 +60,8 @@ const mapStateToProps = (state) => { // будем получать стейт �
 // }
 const mapDispatchToProps =  {
     menuLoaded,
-    menuRequested
+    menuRequested,
+    menuError
 }
 
 // чтобы компонент получал сервис из контекса, мы им оборачиваем наш компонент

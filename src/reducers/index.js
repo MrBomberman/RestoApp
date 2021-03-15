@@ -1,6 +1,7 @@
 const initialState = {
     menu: [],
-    loading: true
+    loading: true,
+    error: false
 }
 
 // даже если стейт не будет передан, все равно у нас будет меню с пустым массивом
@@ -17,6 +18,10 @@ const reducer = (state = initialState, action) => {
             return {
                 menu: state.menu, // берем меню из предыдущего стейта
                 loading: true
+            }
+        case 'MENU_ERROR':
+            return {
+                error: true
             }
         default: 
             return state
