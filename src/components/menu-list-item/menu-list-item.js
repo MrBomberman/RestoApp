@@ -14,13 +14,13 @@ const MenuListItem = ({menuItem}) => {
     }
 
     return (
-
             <li className="menu__item">
             <Link to = {`/${menuItem.id}`}>
-            <img src={process.env.PUBLIC_URL + icon} />
-            </Link>
-            
+            <div className='perfect'>
+                <img className='icon' src={process.env.PUBLIC_URL + icon} />
                 <div className="menu__title">{title}</div>
+            </div>
+            </Link>
                 <img className="menu__img" src={url} alt={title}></img>
                 <div className="menu__category">Category: <span>{category}</span></div>
                 <div className="menu__price">Price: <span>{price}$</span></div>
