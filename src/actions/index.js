@@ -18,10 +18,26 @@ const menuError = () => {
     }
 }
 
+const addedToCart = (id) => {
+    return {
+        type: 'ITEM_ADD_TO_CART',
+        payload: id // индификатор элемента, на который будем кликать
+    }
+}
+
+const deleteFromCart = (id) => {
+    return {
+        type: 'ITEM_REMOVE_FROM_CART',
+        payload: id // передает в reducer элемент, который мы хотим удалить
+    }
+}
+
 export {
     menuLoaded,
     menuRequested,
-    menuError
+    menuError,
+    addedToCart,
+    deleteFromCart
 };
 
 // набор экшенов 

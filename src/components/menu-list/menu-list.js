@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MenuListItem from '../menu-list-item';
 import {connect} from 'react-redux';
 import WithRestoService from '../hoc'
-import {menuLoaded, menuRequested, menuError} from '../../actions'
+import {menuLoaded, menuRequested, menuError, addedToCart} from '../../actions'
 import Error from '../error';
 import Spinner from '../spinner'
 import './menu-list.scss';
@@ -19,7 +19,7 @@ class MenuList extends Component {
     }
 
     render() {
-        const {menuItems, loading, error} = this.props // достаем массив из пропсов, которые получили из mapStateToProps
+        const {menuItems, loading, error, addedToCart} = this.props // достаем массив из пропсов, которые получили из mapStateToProps
         // получаем новые данные уже из редакс стора
 
         if (loading) {
@@ -30,11 +30,13 @@ class MenuList extends Component {
             return <Error/>
         }
 
-        return (
+        return ( // добавляем функцию для добавления элемента в корзину, которая будет обрабатывать определенный id
             <ul className="menu__list">
                 {
                 menuItems.map(menuItem => {
-                    return <MenuListItem key={menuItem.id} menuItem={menuItem}/>
+                    return <MenuListItem 
+                        key={menuItem.id} menuItem={menuItem}
+                        onAddToCart={() => addedToCart(menuItem.id)}/>
                 }) 
                 }
             </ul>
@@ -61,7 +63,8 @@ const mapStateToProps = (state) => { // будем получать стейт �
 const mapDispatchToProps =  {
     menuLoaded,
     menuRequested,
-    menuError
+    menuError,
+    addedToCart
 }
 
 // чтобы компонент получал сервис из контекса, мы им оборачиваем наш компонент
