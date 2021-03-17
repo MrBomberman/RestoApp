@@ -7,10 +7,10 @@ import ItemPage from '../pages/itemPage';
 
 const App = () => { // из пропсов достаем это значение
 
-    return (
+    return (          
         <Router>
             <div style={{background: `url(${Background}) center center/cover no-repeat`}} className="app">
-            <AppHeader total={50}/>
+            <AppHeader/>
             <Switch>
                 <Route path='/' exact component={MainPage}/>
                 <Route path='/cart'  component={CartPage}/>
@@ -18,8 +18,10 @@ const App = () => { // из пропсов достаем это значени�
             </Switch>
             </div>
         </Router>
-
     )
 }
+
+
+
 
 export default App;

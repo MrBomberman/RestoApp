@@ -32,12 +32,13 @@ const deleteFromCart = (id) => {
     }
 }
 
+
 export {
     menuLoaded,
     menuRequested,
     menuError,
     addedToCart,
-    deleteFromCart
+    deleteFromCart,
 };
 
 // набор экшенов 
