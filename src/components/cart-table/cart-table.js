@@ -2,8 +2,10 @@ import React from 'react';
 import './cart-table.scss';
 import { connect } from 'react-redux';
 import { deleteFromCart } from '../../actions';
+import WithRestoService from '../hoc';
+import RestoService from '../../services/resto-service';
 
-const CartTable = ({items , deleteFromCart}) => { // onDelete будет вызываться при нажатии крестика
+const CartTable = ({items , deleteFromCart, RestoService}) => { // onDelete будет вызываться при нажатии крестика
     if( items.length === 0){
         return (<div className="cart__title"> Ваша корзина пуста :( </div>)
     }
@@ -24,10 +26,17 @@ const CartTable = ({items , deleteFromCart}) => { // onDelete будет выз�
                         </div>
                     )
                 })}
+
+
             </div>
+            <button className='order' onClick={() => {
+                RestoService.sendItems(items) // постим наши данные на сервис
+                    .then(data => console.log(data))
+            }}>Send an order</button>
         </>
     );
 };
+
 
 const mapStateToProps = ({items}) => {
     return {
@@ -46,4 +55,4 @@ const mapDispatchToProps = {
     // }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartTable);
+export default WithRestoService()(connect(mapStateToProps, mapDispatchToProps)(CartTable));
